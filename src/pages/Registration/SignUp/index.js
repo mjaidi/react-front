@@ -11,123 +11,114 @@ import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { Formik } from "formik";
-import { Auth } from "context/index.js";
+import { connect } from "react-redux";
+import actions from "../../../store/auth/actions";
 import useStyles from "./styles";
 
-const SignInSide = props => {
+const SignUpSide = ({ signUp }) => {
   const classes = useStyles();
 
   return (
-    <Auth.Consumer>
-      {Authenticate => (
-        <Grid container component="main" className={classes.root}>
-          <CssBaseline />
-          <Grid
-            item
-            xs={12}
-            sm={8}
-            md={5}
-            component={Paper}
-            elevation={6}
-            square
+    <Grid container component="main" className={classes.root}>
+      <CssBaseline />
+      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign Up
+          </Typography>
+          <Formik
+            initialValues={{ email: "", password: "" }}
+            validate={values => {
+              let errors = {};
+              if (!values.email) {
+                errors.email = "Required";
+              } else if (
+                !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+              ) {
+                errors.email = "Invalid email address";
+              }
+              return errors;
+            }}
+            onSubmit={(values, { setSubmitting }) => {
+              signUp(values);
+              setSubmitting(false);
+            }}
           >
-            <div className={classes.paper}>
-              <Avatar className={classes.avatar}>
-                <LockOutlinedIcon />
-              </Avatar>
-              <Typography component="h1" variant="h5">
-                Sign Up
-              </Typography>
-              <Formik
-                initialValues={{ email: "", password: "" }}
-                validate={values => {
-                  let errors = {};
-                  if (!values.email) {
-                    errors.email = "Required";
-                  } else if (
-                    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(
-                      values.email
-                    )
-                  ) {
-                    errors.email = "Invalid email address";
-                  }
-                  return errors;
-                }}
-                onSubmit={(values, { setSubmitting }) => {
-                  Authenticate.signUp(values);
-                  setSubmitting(false);
-                }}
-              >
-                {({
-                  values,
-                  handleChange,
-                  handleBlur,
-                  handleSubmit,
-                  isSubmitting
-                }) => (
-                  <form className={classes.form} onSubmit={handleSubmit}>
-                    <TextField
-                      variant="outlined"
-                      margin="normal"
-                      required
-                      fullWidth
-                      id="email"
-                      label="Email Address"
-                      name="email"
-                      autoComplete="email"
-                      autoFocus
-                      type="email"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.email}
-                    />
+            {({
+              values,
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              isSubmitting
+            }) => (
+              <form className={classes.form} onSubmit={handleSubmit}>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                  type="email"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.email}
+                />
 
-                    <TextField
-                      variant="outlined"
-                      margin="normal"
-                      required
-                      fullWidth
-                      name="password"
-                      label="Password"
-                      type="password"
-                      id="password"
-                      autoComplete="current-password"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.password}
-                    />
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.password}
+                />
 
-                    <FormControlLabel
-                      control={<Checkbox value="remember" color="primary" />}
-                      label="Remember me"
-                    />
-                    <Button
-                      type="submit"
-                      fullWidth
-                      variant="contained"
-                      color="primary"
-                      className={classes.submit}
-                      disabled={isSubmitting}
-                    >
-                      Sign Up
-                    </Button>
-                    <Grid container>
-                      <Grid item>
-                        <Link to={"/login"} variant="body2">
-                          {"Already have an account? Log In"}
-                        </Link>
-                      </Grid>
-                    </Grid>
-                  </form>
-                )}
-              </Formik>
-            </div>
-          </Grid>
-          <Grid item xs={false} sm={4} md={7} className={classes.image} />
-        </Grid>
-      )}
-    </Auth.Consumer>
+                <FormControlLabel
+                  control={<Checkbox value="remember" color="primary" />}
+                  label="Remember me"
+                />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                  disabled={isSubmitting}
+                >
+                  Sign Up
+                </Button>
+                <Grid container>
+                  <Grid item>
+                    <Link to={"/login"} variant="body2">
+                      {"Already have an account? Log In"}
+                    </Link>
+                  </Grid>
+                </Grid>
+              </form>
+            )}
+          </Formik>
+        </div>
+      </Grid>
+      <Grid item xs={false} sm={4} md={7} className={classes.image} />
+    </Grid>
   );
 };
 
-export default SignInSide;
+const mapDispatchToProps = dispatch => ({
+  signUp: payload => dispatch(actions.signUp(payload))
+});
+
+export default connect(null, mapDispatchToProps)(SignUpSide);
