@@ -1,13 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
 import Navbar from "components/navigation/Navbar";
+import actions from "../../store/landing/actions";
 
-function Landing() {
+const Landing = ({ message, getMessage }) => {
+  useEffect(() => {
+    getMessage();
+  });
   return (
     <div>
       <Navbar />
-      This is a basic landing page
+      {message}
     </div>
   );
-}
+};
 
-export default Landing;
+const mapDispatchToProps = dispatch => ({
+  getMessage: () => dispatch(actions.getMessage())
+});
+
+const mapStateToProps = state => ({
+  message: state.landing.message
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Landing);

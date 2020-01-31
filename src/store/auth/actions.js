@@ -1,8 +1,7 @@
 import axios from "axios";
-
+import { BASE_URL } from "../../utils/axiosConfig";
 import { authStorage } from "../../utils/localStorage";
 
-const BASE_URL = "http://localhost:3000";
 const NS = "auth";
 
 export const actionTypes = {
@@ -55,7 +54,7 @@ const actions = {
         });
     };
   },
-  logout: values => {
+  logout: () => {
     return dispatch => {
       authStorage.clear();
       dispatch(action(actionTypes.LOGOUT));

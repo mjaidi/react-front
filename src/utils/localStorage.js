@@ -20,5 +20,8 @@ export const authStorage = {
     localStorage.setItem("user", JSON.stringify(user));
     localStorage.setItem("token", token);
     localStorage.setItem("tokenExpDate", tokenExpDate);
+  },
+  getToken: () => {
+    return localStorage.getItem("token");
   }
 };
