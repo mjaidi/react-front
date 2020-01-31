@@ -2,14 +2,31 @@ import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { isAuthorizedRoute } from "utils/auth_roles";
 
-const LoggedInRoute = ({ component: Child, isLoggedIn, ...rest }) => {
+const LoggedInRoute = ({
+  component: Child,
+  isLoggedIn,
+  location,
+  user,
+  ...rest
+}) => {
+  console.log(isLoggedIn);
+  console.log(location);
   return (
     <Route
       {...rest}
       render={props => {
         return isLoggedIn ? (
-          <Child {...props} />
+          isAuthorizedRoute(location.pathname, user.role) ? (
+            <Child {...props} />
+          ) : (
+            <Redirect
+              to={{
+                pathname: "/"
+              }}
+            />
+          )
         ) : (
           <Redirect
             to={{
@@ -27,7 +44,8 @@ LoggedInRoute.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  isLoggedIn: state.auth.isLoggedIn
+  isLoggedIn: state.auth.isLoggedIn,
+  user: state.auth.user
 });
 
 export default connect(mapStateToProps, null)(LoggedInRoute);

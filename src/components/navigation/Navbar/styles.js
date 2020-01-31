@@ -11,7 +11,8 @@ const useStyles = makeStyles(theme => ({
   },
   link: {
     textDecoration: "none",
-    color: "inherit"
+    color: "inherit",
+    margin: "0 5px"
   }
 }));
 

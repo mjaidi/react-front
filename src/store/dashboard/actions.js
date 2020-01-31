@@ -1,7 +1,7 @@
 import axios from "axios";
 import { BASE_API_URL, AUTH_HEADERS } from "../../utils/axiosConfig";
 
-const NS = "landing";
+const NS = "dashboard";
 
 export const actionTypes = {
   SET_MESSAGE: `${NS}/SET_MESSAGE`
@@ -13,7 +13,7 @@ const actions = {
   getMessage: () => {
     return dispatch => {
       return axios
-        .get(`${BASE_API_URL}/main`, AUTH_HEADERS)
+        .get(`${BASE_API_URL}/admin_page`, AUTH_HEADERS)
         .then(res => {
           dispatch(action(actionTypes.SET_MESSAGE, res.data.message));
         })

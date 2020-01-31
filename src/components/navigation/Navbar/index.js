@@ -9,8 +9,9 @@ import { connect } from "react-redux";
 import actions from "../../../store/auth/actions";
 import { Link } from "react-router-dom";
 import useStyles from "./styles";
+import { isAuthorizedRoute } from "utils/auth_roles";
 
-const Navbar = ({ isLoggedIn, logout }) => {
+const Navbar = ({ isLoggedIn, logout, user }) => {
   const classes = useStyles();
 
   return (
@@ -27,9 +28,20 @@ const Navbar = ({ isLoggedIn, logout }) => {
               <MenuIcon />
             </IconButton>
           </Link>
+
           <Typography variant="h6" className={classes.title}>
-            News
+            {isLoggedIn && isAuthorizedRoute("/main", user.role) && (
+              <Link to={"/main"} className={classes.link}>
+                Main
+              </Link>
+            )}
+            {isLoggedIn && isAuthorizedRoute("/dashboard", user.role) && (
+              <Link to={"/dashboard"} className={classes.link}>
+                Dashboard
+              </Link>
+            )}
           </Typography>
+
           {!isLoggedIn && (
             <Link to={"/login"} className={classes.link}>
               <Button color="inherit">Login</Button>
@@ -46,7 +58,8 @@ const Navbar = ({ isLoggedIn, logout }) => {
   );
 };
 const mapStateToProps = state => ({
-  isLoggedIn: state.auth.isLoggedIn
+  isLoggedIn: state.auth.isLoggedIn,
+  user: state.auth.user
 });
 
 const mapDispatchToProps = dispatch => ({
