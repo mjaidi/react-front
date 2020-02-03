@@ -11,8 +11,6 @@ const LoggedInRoute = ({
   user,
   ...rest
 }) => {
-  console.log(isLoggedIn);
-  console.log(location);
   return (
     <Route
       {...rest}

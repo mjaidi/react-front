@@ -7,7 +7,7 @@ const getInitialState = () => ({
 const landing = (state = getInitialState(), { type, payload }) => {
   switch (type) {
     case actionTypes.SET_MESSAGE:
-      return { message: payload };
+      return { ...state, message: payload };
     default:
       return state;
   }

@@ -1,5 +1,5 @@
-import axios from "axios";
-import { BASE_API_URL, AUTH_HEADERS } from "../../utils/axiosConfig";
+import ApiService, { BASE_API_URL, AUTH_HEADERS } from "services/Api";
+const client = new ApiService({ headers: AUTH_HEADERS, baseURL: BASE_API_URL });
 
 const NS = "dashboard";
 
@@ -12,14 +12,9 @@ const action = (type, payload) => ({ type, payload });
 const actions = {
   getMessage: () => {
     return dispatch => {
-      return axios
-        .get(`${BASE_API_URL}/admin_page`, AUTH_HEADERS)
-        .then(res => {
-          dispatch(action(actionTypes.SET_MESSAGE, res.data.message));
-        })
-        .catch(err => {
-          alert(JSON.stringify(err.response.data));
-        });
+      return client.get(`/admin_page`).then(res => {
+        dispatch(action(actionTypes.SET_MESSAGE, res.data.message));
+      });
     };
   }
 };

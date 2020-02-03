@@ -1,6 +1,8 @@
-import axios from "axios";
-import { BASE_URL } from "../../utils/axiosConfig";
-import { authStorage } from "../../utils/localStorage";
+import ApiService, { BASE_URL } from "services/Api";
+import { authStorage } from "utils/localStorage";
+import snackbarActions from "store/snackbars/actions";
+
+const client = new ApiService({ baseURL: BASE_URL });
 
 const NS = "auth";
 
@@ -15,31 +17,8 @@ const action = (type, payload) => ({ type, payload });
 const actions = {
   login: values => {
     return dispatch => {
-      return axios
-        .post(`${BASE_URL}/login`, {
-          user: {
-            email: values.email,
-            password: values.password
-          }
-        })
-        .then(res => {
-          authStorage.persist(res.data, res.headers.authorization, 6000);
-          dispatch(
-            action(actionTypes.LOGIN, {
-              user: res.data,
-              isLoggedIn: true
-            })
-          );
-        })
-        .catch(err => {
-          alert(JSON.stringify(err.response.data));
-        });
-    };
-  },
-  signUp: values => {
-    return dispatch => {
-      return axios
-        .post(`${BASE_URL}/signup`, {
+      return client
+        .post(`/login`, {
           user: {
             email: values.email,
             password: values.password
@@ -47,10 +26,33 @@ const actions = {
         })
         .then(res => {
           console.log(res);
-          dispatch(actions.login(values));
+          authStorage.persist(res.data, res.headers.authorization, 6000);
+          dispatch(
+            action(actionTypes.LOGIN, {
+              user: res.data,
+              isLoggedIn: true
+            })
+          );
+          dispatch(
+            snackbarActions.newMessage({
+              message: "You have successfully logged in",
+              type: "success"
+            })
+          );
+        });
+    };
+  },
+  signUp: values => {
+    return dispatch => {
+      return client
+        .post(`/signup`, {
+          user: {
+            email: values.email,
+            password: values.password
+          }
         })
-        .catch(err => {
-          alert(JSON.stringify(err.response.data));
+        .then(res => {
+          dispatch(actions.login(values));
         });
     };
   },
@@ -58,6 +60,12 @@ const actions = {
     return dispatch => {
       authStorage.clear();
       dispatch(action(actionTypes.LOGOUT));
+      dispatch(
+        snackbarActions.newMessage({
+          message: "You have successfully logged out",
+          type: "success"
+        })
+      );
     };
   },
   setLoggedIn: (payload = {}) => ({ type: actionTypes.SET_LOGGED_IN, payload })

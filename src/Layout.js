@@ -1,16 +1,14 @@
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";
-import configureStore from "store";
-import actions from "./store/auth/actions";
-import { createBrowserHistory } from "history";
 
+import Snackbars from "components/Snackbars";
+
+import store from "store";
+import actions from "./store/auth/actions";
 import Routes from "./routes";
 
 const Layout = () => {
-  const store = configureStore({});
-  const history = createBrowserHistory();
-
   if (process.env.NODE_ENV !== "production") {
     console.log("Initial state ->");
     console.log(store.getState());
@@ -31,7 +29,8 @@ const Layout = () => {
 
   return (
     <Provider store={store}>
-      <Router history={history}>
+      <Snackbars />
+      <Router>
         <Routes />
       </Router>
     </Provider>

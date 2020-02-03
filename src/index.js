@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import Layout from "Layout";
-import "styles.scss";
+import "styles/globalStyles.scss";
 import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
