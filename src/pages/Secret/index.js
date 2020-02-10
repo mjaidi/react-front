@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import Navbar from "components/navigation/Navbar";
-import actions from "../../store/dashboard/actions";
+import actions from "../../store/secret/actions";
 
 const Main = ({ message, getMessage }) => {
   useEffect(() => {
@@ -20,7 +20,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
-  message: state.dashboard.message
+  message: state.secret.message
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

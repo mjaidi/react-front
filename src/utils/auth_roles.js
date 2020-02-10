@@ -1,11 +1,11 @@
 const AUTHORIZED_ROLES_FOR_ROUTES = [
   {
-    route: "/dashboard",
+    route: "/admin",
     authorizedRoles: ["admin"]
   },
   {
-    route: "/main",
-    authorizedRoles: ["admin", "client", "provider", null]
+    route: "/secret",
+    authorizedRoles: ["admin", "client", "supplier", null]
   }
 ];
 

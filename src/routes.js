@@ -8,8 +8,8 @@ import LoggedInRoute from "components/AuthRoutes/LoggedInRoute";
 const Login = React.lazy(() => import("pages/Registration/Login"));
 const SignUp = React.lazy(() => import("pages/Registration/SignUp"));
 const Landing = React.lazy(() => import("pages/Landing"));
-const Main = React.lazy(() => import("pages/Main"));
-const Dashboard = React.lazy(() => import("pages/Dashboard"));
+const Secret = React.lazy(() => import("pages/Secret"));
+const Admin = React.lazy(() => import("pages/Admin"));
 
 const Routes = () => {
   return (
@@ -43,21 +43,21 @@ const Routes = () => {
         )}
       />
       <LoggedInRoute
-        path="/main"
+        path="/secret"
         exact
         component={() => (
           <Suspense fallback={<div>Loading....</div>}>
-            <Main />
+            <Secret />
           </Suspense>
         )}
       />
       <LoggedInRoute
-        path="/dashboard"
+        path="/admin"
         authorizedRoles={["admin"]}
         exact
         component={() => (
           <Suspense fallback={<div>Loading....</div>}>
-            <Dashboard />
+            <Admin />
           </Suspense>
         )}
       />

@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import Navbar from "components/navigation/Navbar";
-import actions from "../../store/main/actions";
+import actions from "../../store/admin/actions";
 
-const Main = ({ message, getMessage }) => {
+const Admin = ({ message, getMessage }) => {
   useEffect(() => {
     getMessage();
   });
@@ -20,7 +20,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
-  message: state.main.message
+  message: state.admin.message
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+export default connect(mapStateToProps, mapDispatchToProps)(Admin);

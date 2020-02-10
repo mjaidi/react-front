@@ -30,14 +30,14 @@ const Navbar = ({ isLoggedIn, logout, user }) => {
           </Link>
 
           <Typography variant="h6" className={classes.title}>
-            {isLoggedIn && isAuthorizedRoute("/main", user.role) && (
-              <Link to={"/main"} className={classes.link}>
-                Main
+            {isLoggedIn && isAuthorizedRoute("/secret", user.role) && (
+              <Link to={"/secret"} className={classes.link}>
+                Secret
               </Link>
             )}
-            {isLoggedIn && isAuthorizedRoute("/dashboard", user.role) && (
-              <Link to={"/dashboard"} className={classes.link}>
-                Dashboard
+            {isLoggedIn && isAuthorizedRoute("/admin", user.role) && (
+              <Link to={"/admin"} className={classes.link}>
+                Admin
               </Link>
             )}
           </Typography>
