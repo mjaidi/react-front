@@ -16,14 +16,14 @@ const Layout = () => {
 
   const token = localStorage.getItem("token");
   if (!token) {
-    store.dispatch(actions.logout());
+    store.dispatch(actions.clear());
   } else {
     const tokenExpDate = new Date(localStorage.getItem("tokenExpDate"));
     // if token hasn't expired
     if (tokenExpDate > new Date()) {
       store.dispatch(actions.setLoggedIn());
     } else {
-      store.dispatch(actions.logout());
+      store.dispatch(actions.clear());
     }
   }
 

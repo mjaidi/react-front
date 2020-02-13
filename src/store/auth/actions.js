@@ -68,6 +68,12 @@ const actions = {
       );
     };
   },
+  clear: () => {
+    return dispatch => {
+      authStorage.clear();
+      dispatch(action(actionTypes.LOGOUT));
+    };
+  },
   setLoggedIn: (payload = {}) => ({ type: actionTypes.SET_LOGGED_IN, payload })
 };
 
