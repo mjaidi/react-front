@@ -3,8 +3,11 @@ import { authStorage } from "utils/localStorage";
 import store from "../store";
 import snackbarActions from "store/snackbars/actions";
 
-export const BASE_URL = "http://localhost:3000";
-export const BASE_API_URL = "http://localhost:3000/api/v1";
+export const BASE_URL =
+  process.env.NODE_ENV !== "production"
+    ? "http://localhost:3000"
+    : "http://rails-jwt-template-123.herokuapp.com";
+export const BASE_API_URL = `${BASE_URL}/api/v1`;
 export const AUTH_HEADERS = {
   headers: {
     Accept: "application/json",
