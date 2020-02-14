@@ -16,7 +16,8 @@ const auth = (state = getInitialState(), { type, payload }) => {
       return {
         ...state,
         isLoggedIn: false,
-        user: null
+        user: null,
+        token: null
       };
     case actionTypes.SET_LOGGED_IN:
       return {

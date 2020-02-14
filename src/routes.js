@@ -7,6 +7,10 @@ import LoggedInRoute from "components/AuthRoutes/LoggedInRoute";
 // lazy loaded routes
 const Login = React.lazy(() => import("pages/Registration/Login"));
 const SignUp = React.lazy(() => import("pages/Registration/SignUp"));
+const NewPassword = React.lazy(() => import("pages/Registration/NewPassword"));
+const ResetPassword = React.lazy(() =>
+  import("pages/Registration/ResetPassword")
+);
 const Landing = React.lazy(() => import("pages/Landing"));
 const Secret = React.lazy(() => import("pages/Secret"));
 const Admin = React.lazy(() => import("pages/Admin"));
@@ -29,6 +33,24 @@ const Routes = () => {
         component={() => (
           <Suspense fallback={<div>Loading....</div>}>
             <SignUp />
+          </Suspense>
+        )}
+      />
+      <NotLoggedInRoute
+        path="/new_password"
+        exact
+        component={() => (
+          <Suspense fallback={<div>Loading....</div>}>
+            <NewPassword />
+          </Suspense>
+        )}
+      />
+      <NotLoggedInRoute
+        path="/password/edit"
+        exact
+        component={() => (
+          <Suspense fallback={<div>Loading....</div>}>
+            <ResetPassword />
           </Suspense>
         )}
       />

@@ -9,7 +9,8 @@ const NS = "auth";
 export const actionTypes = {
   LOGIN: `${NS}/LOGIN`,
   LOGOUT: `${NS}/LOGOUT`,
-  SET_LOGGED_IN: `${NS}/SET_LOGGED_IN`
+  SET_LOGGED_IN: `${NS}/SET_LOGGED_IN`,
+  SET_TOKEN: `${NS}/SET_TOKEN`
 };
 
 const action = (type, payload) => ({ type, payload });
@@ -53,6 +54,44 @@ const actions = {
         })
         .then(res => {
           dispatch(actions.login(values));
+        });
+    };
+  },
+  newPassword: values => {
+    return dispatch => {
+      return client
+        .post(`/password`, {
+          user: {
+            email: values.email
+          }
+        })
+        .then(res => {
+          dispatch(
+            snackbarActions.newMessage({
+              message: "Email password reset instructions successfuly sent",
+              type: "success"
+            })
+          );
+        });
+    };
+  },
+  resetPassword: values => {
+    return dispatch => {
+      return client
+        .patch(`/password`, {
+          user: {
+            password: values.password,
+            reset_password_token: values.token
+          }
+        })
+        .then(res => {
+          dispatch(
+            snackbarActions.newMessage({
+              message:
+                "Your password has been successfuly updated, please login to continue",
+              type: "success"
+            })
+          );
         });
     };
   },
