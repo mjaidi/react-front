@@ -28,7 +28,7 @@ const Registration = ({
   const classes = useStyles();
   const location = useLocation();
 
-  const name = () => {
+  const formName = () => {
     switch (formType) {
       case "Login":
         return "Sign In";
@@ -57,7 +57,7 @@ const Registration = ({
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            {name()}
+            {formName()}
           </Typography>
           <Formik
             initialValues={{ email: "", password: "" }}
@@ -152,7 +152,7 @@ const Registration = ({
                   className={classes.submit}
                   disabled={isSubmitting}
                 >
-                  {name()}
+                  {formName()}
                 </Button>
                 <Grid container>
                   {formType === "Login" && (
