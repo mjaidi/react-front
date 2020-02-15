@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Formik } from "formik";
 import { Link, useLocation } from "react-router-dom";
 import qs from "query-string";
+import * as Yup from "yup";
 
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -43,6 +44,16 @@ const Registration = ({
     }
   };
 
+  const ValidationSchema = Yup.object().shape({
+    password: Yup.string()
+      .min(6, "Too Short!")
+      .max(50, "Too Long!")
+      .required("Required"),
+    email: Yup.string()
+      .email("Invalid email")
+      .required("Required")
+  });
+
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -61,19 +72,7 @@ const Registration = ({
           </Typography>
           <Formik
             initialValues={{ email: "", password: "" }}
-            validate={values => {
-              let errors = {};
-              if (formType !== "ResetPassword") {
-                if (!values.email) {
-                  errors.email = "Required";
-                } else if (
-                  !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-                ) {
-                  errors.email = "Invalid email address";
-                }
-              }
-              return errors;
-            }}
+            validationSchema={ValidationSchema}
             onSubmit={(values, { setSubmitting }) => {
               switch (formType) {
                 case "Login":
@@ -100,43 +99,55 @@ const Registration = ({
             {({
               values,
               handleChange,
+              errors,
+              touched,
               handleBlur,
               handleSubmit,
               isSubmitting
             }) => (
               <form className={classes.form} onSubmit={handleSubmit}>
                 {formType !== "ResetPassword" && (
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
-                    autoFocus
-                    type="email"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.email}
-                  />
+                  <div>
+                    <TextField
+                      variant="outlined"
+                      margin="normal"
+                      required
+                      fullWidth
+                      id="email"
+                      label="Email Address"
+                      name="email"
+                      autoComplete="email"
+                      autoFocus
+                      type="email"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.email}
+                    />
+                    {errors.email && touched.email && (
+                      <div className={classes.error}>{errors.email}</div>
+                    )}
+                  </div>
                 )}
                 {formType !== "NewPassword" && (
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.password}
-                  />
+                  <div>
+                    <TextField
+                      variant="outlined"
+                      margin="normal"
+                      required
+                      fullWidth
+                      name="password"
+                      label="Password"
+                      type="password"
+                      id="password"
+                      autoComplete="current-password"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.password}
+                    />
+                    {errors.password && touched.password && (
+                      <div className={classes.error}>{errors.password}</div>
+                    )}
+                  </div>
                 )}
                 {(formType === "SignIn" || formType === "SignUp") && (
                   <FormControlLabel

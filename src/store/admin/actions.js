@@ -1,5 +1,5 @@
-import ApiService, { BASE_API_URL, AUTH_HEADERS } from "services/Api";
-const client = new ApiService({ headers: AUTH_HEADERS, baseURL: BASE_API_URL });
+import ApiService, { BASE_API_URL } from "services/Api";
+const client = new ApiService({ baseURL: BASE_API_URL });
 
 const NS = "admin";
 

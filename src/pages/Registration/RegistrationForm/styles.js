@@ -26,6 +26,10 @@ const useStyles = makeStyles(theme => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2)
+  },
+  error: {
+    fontSize: "12px",
+    color: "red"
   }
 }));
 

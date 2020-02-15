@@ -28,6 +28,7 @@ const actions = {
         .then(res => {
           console.log(res);
           authStorage.persist(res.data, res.headers.authorization, 6000);
+          dispatch(action(actionTypes.SET_TOKEN, null));
           dispatch(
             action(actionTypes.LOGIN, {
               user: res.data,
@@ -113,7 +114,8 @@ const actions = {
       dispatch(action(actionTypes.LOGOUT));
     };
   },
-  setLoggedIn: (payload = {}) => ({ type: actionTypes.SET_LOGGED_IN, payload })
+  setLoggedIn: (payload = {}) => ({ type: actionTypes.SET_LOGGED_IN, payload }),
+  setToken: (payload = {}) => ({ type: actionTypes.SET_TOKEN, payload })
 };
 
 export default actions;

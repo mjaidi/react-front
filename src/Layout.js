@@ -22,6 +22,7 @@ const Layout = () => {
     // if token hasn't expired
     if (tokenExpDate > new Date()) {
       store.dispatch(actions.setLoggedIn());
+      store.dispatch(actions.setToken());
     } else {
       store.dispatch(actions.clear());
     }

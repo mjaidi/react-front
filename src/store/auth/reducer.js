@@ -2,11 +2,14 @@ import { actionTypes } from "./actions";
 
 const getInitialState = () => ({
   isLoggedIn: false,
-  user: null
+  user: null,
+  token: null
 });
 
 const auth = (state = getInitialState(), { type, payload }) => {
   switch (type) {
+    case actionTypes.SET_TOKEN:
+      return { ...state, token: localStorage.getItem("token") };
     case actionTypes.LOGIN:
       return {
         ...state,
