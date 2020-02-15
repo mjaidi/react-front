@@ -12,7 +12,7 @@ export const AUTH_HEADERS = {
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
-    'Access-Control-Allow-Origin: *',
+    "Access-Control-Allow-Origin": "*",
     Authorization: authStorage.getToken()
   }
 };
@@ -22,7 +22,7 @@ const TIMEOUT = 20000;
 const HEADERS = {
   "Content-Type": "application/json",
   Accept: "application/json",
-  'Access-Control-Allow-Origin: *'
+  "Access-Control-Allow-Origin": "*"
 };
 
 class ApiService {
